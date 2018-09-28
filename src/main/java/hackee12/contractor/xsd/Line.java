@@ -64,7 +64,7 @@ public final class Line {
 
             if (null != parentPath) {
                 sb.append(parentPath);
-                sb.append(".");
+                sb.append("/");
             }
             switch (qualifier) {
                 case LIST:

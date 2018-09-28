@@ -27,7 +27,7 @@ public class LineTest {
                 .optional()
                 .build();
         String message = "line.toString() doesn't match";
-        String expected = "'parent.child','ELEMENT','','optional',";
+        String expected = "'parent/child','ELEMENT','','optional',";
         String actual = child.toString();
         assertEquals(message, expected, actual);
     }
@@ -48,7 +48,7 @@ public class LineTest {
                 .parent(parent)
                 .build();
         String message = "line.toString() doesn't match";
-        String expected = "'parent.@child','ATTRIBUTE','','optional',";
+        String expected = "'parent/@child','ATTRIBUTE','','optional',";
         String actual = child.toString();
         assertEquals(message, expected, actual);
     }
