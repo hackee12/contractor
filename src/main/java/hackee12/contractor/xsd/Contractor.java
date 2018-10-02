@@ -24,17 +24,17 @@ public class Contractor {
                 Class<?> type = f.getType();
                 String x;
                 if (List.class.equals(type)) {
-                    x = path + appendList(xmlElement);
+                    x = path + appendList(xmlElement, f);
                     ParameterizedType genericType = (ParameterizedType) f.getGenericType();
                     passThrough(x, Class.forName(genericType.getActualTypeArguments()[0].getTypeName()));
                 } else {
-                    x = path + appendElement(xmlElement);
+                    x = path + appendElement(xmlElement, f);
                     passThrough(x, type);
                 }
             }
             XmlAttribute xmlAttribute = f.getDeclaredAnnotation(XmlAttribute.class);
             if (null != xmlAttribute) {
-                System.out.println(path + appendAttribute(xmlAttribute));
+                System.out.println(path + appendAttribute(xmlAttribute, f));
             }
             XmlValue xmlValue = f.getDeclaredAnnotation(XmlValue.class);
             if (null != xmlValue) {
@@ -51,16 +51,16 @@ public class Contractor {
         return fields;
     }
 
-    private String appendAttribute(XmlAttribute attribute) {
-        return "/@" + attribute.name() + (attribute.required() ? "(r)" : "");
+    private String appendAttribute(XmlAttribute attribute, Field field) {
+        return "/@" + ("##default".equals(attribute.name()) ? field.getName() : attribute.name()) + (attribute.required() ? "(r)" : "");
     }
 
-    private String appendElement(XmlElement element) {
-        return "/" + element.name() + (element.required() ? "(r)" : "");
+    private String appendElement(XmlElement element, Field field) {
+        return "/" + ("##default".equals(element.name()) ? field.getName() : element.name()) + (element.required() ? "(r)" : "");
     }
 
-    private String appendList(XmlElement list) {
-        return "/" + list.name() + "[]" + (list.required() ? "(r)" : "");
+    private String appendList(XmlElement list, Field field) {
+        return "/" + ("##default".equals(list.name()) ? field.getName() : list.name()) + "[]" + (list.required() ? "(r)" : "");
     }
 
     private String appendValue() {

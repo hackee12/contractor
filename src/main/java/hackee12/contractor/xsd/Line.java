@@ -36,22 +36,13 @@ public final class Line {
             return this;
         }
 
-        Builder noParent() {
-            return this;
-        }
-
         Builder type(String type) {
             this.type = type;
             return this;
         }
 
-        Builder required() {
-            this.required = true;
-            return this;
-        }
-
-        Builder optional() {
-            this.required = false;
+        Builder required(boolean required) {
+            this.required = required;
             return this;
         }
 
@@ -81,6 +72,9 @@ public final class Line {
                     break;
                 default:
                     throw new IllegalStateException();
+            }
+            if (required) {
+                sb.append("(r)");
             }
 
             return sb.toString();

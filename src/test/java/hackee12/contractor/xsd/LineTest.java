@@ -19,15 +19,13 @@ public class LineTest {
     @Test
     public void child() {
         Line parent = new Line.Builder("parent", Line.Qualifier.ELEMENT)
-                .noParent()
-                .required()
+                .required(true)
                 .build();
         Line child = new Line.Builder("child", Line.Qualifier.ELEMENT)
                 .parent(parent)
-                .optional()
                 .build();
         String message = "line.toString() doesn't match";
-        String expected = "'parent/child','ELEMENT','','optional',";
+        String expected = "'parent(r)/child','ELEMENT','','optional',";
         String actual = child.toString();
         assertEquals(message, expected, actual);
     }
